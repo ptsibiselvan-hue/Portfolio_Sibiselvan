@@ -1,0 +1,892 @@
+ /* ======== Basic Setup & Fonts ======== */
+
+ :root {
+     /* Light Mode Variables */
+     --bg-gradient: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+     --card-bg: rgba(255, 255, 255, 0.3);
+     /* Nav Background: Slightly transparent white for blur effect */
+     --nav-bg: rgba(255, 255, 255, 0.5);
+     --text-color: #333;
+     --text-color-strong: #000;
+     --border-color: rgba(255, 255, 255, 0.5);
+     --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+     --theme-icon: #333;
+     --hero-h1-color: #1e1b4b;
+     --hero-h2-color: #3f3c6d;
+     --skill-icon-color: #4b0082;
+     --tag-bg: rgba(255, 255, 255, 0.5);
+     --link-hover-bg: rgba(50, 100, 250, 0.9);
+     --link-btn-bg: rgba(255, 255, 255, 0.9);
+     --glow-color: rgba(142, 197, 252, 0.7);
+ }
+
+ body.dark-mode {
+     /* Dark Mode Variables */
+     --bg-gradient: linear-gradient(120deg, #1c152e 0%, #001f3f 100%);
+     --card-bg: rgba(0, 0, 0, 0.2);
+     /* Nav Background: Slightly transparent black for dark blur effect */
+     --nav-bg: rgba(0, 0, 0, 0.4);
+     --text-color: #eee;
+     --text-color-strong: #fff;
+     --border-color: rgba(255, 255, 255, 0.1);
+     --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+     --theme-icon: #fff;
+     --hero-h1-color: #f0f0ff;
+     --hero-h2-color: #b0b0d0;
+     --skill-icon-color: #9370db;
+     --tag-bg: rgba(255, 255, 255, 0.1);
+     --link-hover-bg: rgba(50, 100, 250, 0.7);
+     --link-btn-bg: rgba(255, 255, 255, 0.9);
+     --glow-color: rgba(147, 112, 219, 0.5);
+ }
+
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: 'Poppins', sans-serif;
+     /* cursor: default; */
+ }
+
+ body {
+     background: var(--bg-gradient);
+     color: var(--text-color);
+     transition: background 0.3s ease, color 0.3s ease;
+     min-height: 100vh;
+     padding-top: 80px;
+ }
+
+ /* 2. Scroll Animation CSS Base: Initial (hidden) state for animation */
+ .animate-me {
+     opacity: 0;
+     transform: translateY(30px);
+     /* Lift up effect from the bottom */
+     /* JAVASCRIPT ANIMATION FIX: Enable CSS transition here,
+               so JavaScript only adds/removes the class */
+     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+ }
+
+ /* This class applies when the element enters the viewport */
+ .animate-me.visible {
+     opacity: 1;
+     transform: translateY(0);
+ }
+
+ /* Add separate transition-delay for Hero section elements */
+ .hero-left.animate-me.visible {
+     transition-delay: 100ms;
+ }
+
+ .hero-right.animate-me.visible {
+     transition-delay: 200ms;
+ }
+
+
+ section {
+     /* max-width: 1100px; */
+     margin: 4rem auto;
+     padding: 2rem;
+     /* Ensure section overflow is hidden so elements don't show during animation */
+     overflow: hidden;
+ }
+
+ h1,
+ h2,
+ h3 {
+     color: var(--text-color-strong);
+     font-weight: 600;
+ }
+
+ h2 {
+     font-size: 2.5rem;
+     margin-bottom: 2rem;
+     text-align: center;
+ }
+
+ /* ======== Glassmorphism Card Style (Standard) ======== */
+ 
+ .skill-card,
+ .portfolio-card,
+ .experience-item,
+ .education-item,
+ .contact-card {
+     background: var(--card-bg);
+     border-radius: 15px;
+     padding: 1.5rem;
+     border: 1px solid var(--border-color);
+     box-shadow: var(--shadow);
+     backdrop-filter: blur(18px);
+     transition: transform 0.3s ease, box-shadow 0.3s ease;
+ }
+
+ .skill-card {
+     /* Additional styling for skill cards */
+       margin-bottom: 1.5rem;
+ }
+
+ .contact-card {
+     margin-top: 2rem;
+ }
+
+ .skill-card:hover,
+ .experience-item:hover,
+ .education-item:hover {
+     transform: translateY(-5px);
+ }
+
+ /* Special effect for Hero image and skill cards */
+ .special-glass-card {
+     border: 2px solid var(--hero-h2-color);
+     /* Darker/Themed border */
+     box-shadow: 0 0 20px var(--glow-color);
+     /* Added soft glow/shadow */
+ }
+
+ /* Enhanced hover effect for Skill Card */
+ .skill-card:hover {
+     transform: translateY(-5px) scale(1.02);
+     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 0 15px var(--glow-color);
+     /* Enhanced hover shadow */
+ }
+
+
+ /* ============================================== */
+ /* === CURSOR GLOW EFFECT STYLING === */
+ /* ============================================== */
+ #cursor-glow {
+     position: fixed;
+     width: 250px;
+     height: 250px;
+     border-radius: 50%;
+     opacity: 0;
+     transform: translate(-50%, -50%) scale(0.5);
+     pointer-events: none;
+     z-index: 9999;
+     background: radial-gradient(circle, var(--glow-color) 0%, rgba(255, 255, 255, 0) 70%);
+     filter: blur(50px);
+     transition: opacity 0.3s ease, transform 0.3s ease;
+ }
+
+ /* ============================================== */
+ /* === HEADER / NAVIGATION (FIXED & BLURRED) === */
+ /* ============================================== */
+ header {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     z-index: 1000;
+     background: var(--nav-bg);
+     /* Header Background Blur */
+     backdrop-filter: blur(15px);
+     border-bottom: 1px solid var(--border-color);
+     box-shadow: var(--shadow);
+ }
+
+ nav {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     /* max-width: 1200px; */
+     margin: 0 auto;
+     padding: 1rem 2rem;
+ }
+
+ .logo {
+     font-size: 1.5rem;
+     font-weight: 700;
+     color: var(--text-color-strong);
+ }
+
+ .nav-links {
+     display: flex;
+     list-style: none;
+ }
+
+ .nav-links li {
+     margin-left: 1.5rem;
+     /* Reduced margin to fit more links */
+ }
+
+ .nav-links a {
+     text-decoration: none;
+     color: var(--text-color);
+     font-weight: 600;
+     font-size: 1rem;
+     transition: color 0.3s;
+     cursor: pointer;
+ }
+
+ .nav-links a:hover {
+     color: var(--text-color-strong);
+ }
+
+ .nav-right {
+     display: flex;
+     align-items: center;
+ }
+
+ #theme-toggle {
+     font-size: 1.5rem;
+     cursor: pointer;
+     color: var(--theme-icon);
+     margin-right: 1.5rem;
+ }
+
+ .hamburger {
+     display: none;
+     cursor: pointer;
+ }
+
+ .hamburger .line {
+     width: 25px;
+     height: 3px;
+     background: var(--text-color-strong);
+     margin: 5px;
+     transition: all 0.3s ease;
+ }
+
+
+ /* --- HERO SECTION STYLING (3D Tilt Setup) --- */
+ #hero {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     min-height: 90vh;
+     padding-top: 2rem;
+ }
+
+ .hero-left {
+     flex: 1.5;
+     padding-right: 4rem;
+ }
+
+ .hero-left h1 {
+     font-size: 4.5rem;
+     font-weight: 800;
+     line-height: 1.0;
+     letter-spacing: -2px;
+     color: transparent;
+     background-image: linear-gradient(90deg, var(--hero-h1-color), var(--hero-h2-color));
+     -webkit-background-clip: text;
+     background-clip: text;
+     margin-top: 0.2rem;
+ }
+
+ .hero-left h2 {
+     font-size: 2rem;
+     font-weight: 600;
+     margin: 0.5rem 0 0.5rem 0;
+     text-align: left;
+     color: var(--hero-h2-color);
+     min-width: 150px;
+ }
+
+ /* "Namaste, I am" heading */
+ .hero-left h2:nth-child(2) {
+     margin: 2rem 0 0 0;
+ }
+
+ /* Animated role heading */
+ .hero-left h2:nth-child(4) {
+     min-height: 3rem;
+     margin: 0 0 1.5rem 0;
+     display: flex;
+     align-items: center;
+ }
+
+
+ .hero-left p {
+     font-size: 1.1rem;
+     line-height: 1.7;
+     max-width: 550px;
+     color: var(--text-color);
+ }
+
+ .hero-right {
+     perspective: 1000px;
+     flex: 1;
+     display: flex;
+     justify-content: center;
+     overflow: hidden;
+ }
+
+ .hero-right .image-container {
+     transform-style: preserve-3d;
+     background: var(--card-bg);
+     border-radius: 25px;
+     /* Thicker rounded corners */
+     padding: 2rem;
+     /* Increased padding */
+     border: 1px solid var(--border-color);
+     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+     overflow: hidden;
+     width: 400px;
+     /* Increased Size */
+     height: 450px;
+     /* Increased Size */
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     cursor: pointer;
+     transition: transform 0.5s ease-out, box-shadow 0.3s ease;
+ }
+
+ .hero-right img {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+     border-radius: 15px;
+     /* Rounded corners for image inside container */
+     border: none;
+ }
+
+ /* --- ANIMATED TEXT STYLING (Typewriter Effect) --- */
+ #animated-text {
+     border-right: 2px solid var(--hero-h2-color);
+     padding-right: 5px;
+     white-space: nowrap;
+     overflow: hidden;
+     display: inline-block;
+     animation: blink-caret 0.75s step-end infinite;
+ }
+
+ @keyframes blink-caret {
+
+     from,
+     to {
+         border-color: transparent
+     }
+
+     50% {
+         border-color: var(--hero-h2-color);
+     }
+ }
+
+
+ /* --- SKILLS SECTION STYLING --- */
+ .skills-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+     gap: 1.5rem;
+     align-items: stretch;
+ }
+
+ .skill-card {
+     padding: 2rem;
+     display: flex;
+     flex-direction: column;
+     cursor: pointer;
+     /* Add pointer cursor for hover interaction */
+ }
+
+ .skill-header {
+     display: flex;
+     align-items: center;
+     margin-bottom: 1.5rem;
+ }
+
+ .skill-header i {
+     font-size: 1.5rem;
+     color: var(--skill-icon-color);
+     margin-right: 0.75rem;
+     padding: 0.75rem;
+     background-color: var(--tag-bg);
+     border-radius: 8px;
+ }
+
+ .skill-header h3 {
+     font-size: 1.1rem;
+     font-weight: 700;
+     margin: 0;
+     border: none;
+     padding: 0;
+ }
+
+ .skill-tags {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 0.75rem;
+ }
+
+ .skill-tags span {
+     background: var(--tag-bg);
+     color: var(--text-color-strong);
+     padding: 0.4rem 0.9rem;
+     border-radius: 8px;
+     font-size: 0.9rem;
+     font-weight: 500;
+     transition: background-color 0.2s;
+ }
+
+ .skill-tags span:hover {
+     background: rgba(255, 255, 255, 0.8);
+ }
+
+ body.dark-mode .skill-tags span:hover {
+     background: rgba(255, 255, 255, 0.2);
+ }
+
+ 
+
+ /* ============================================== */
+ /* === PORTFOLIO SECTION - HOVER LINK STYLING === */
+ /* ============================================== */
+
+ .portfolio-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+     gap: 1.5rem;
+ }
+
+ .portfolio-card-link {
+     text-decoration: none;
+     color: inherit;
+     display: block;
+ }
+
+ .portfolio-card-link:hover .portfolio-card {
+     transform: translateY(-5px);
+ }
+
+ .portfolio-card {
+     position: relative;
+     overflow: hidden;
+ }
+
+ .portfolio-card img {
+     width: 100%;
+     height: 180px;
+     /* Fixed height for consistent look */
+     object-fit: cover;
+     border-radius: 10px;
+     margin-bottom: 1rem;
+     display: block;                                             
+ }
+
+  .card-overlay {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 180px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     opacity: 0;
+     visibility: hidden;
+     transition: opacity 0.3s ease, visibility 0.3s ease;
+     border-radius: 10px;
+ }
+
+ .portfolio-card-link:hover .card-overlay {
+     opacity: 1;
+     visibility: visible;
+ }
+
+ .overlay-link-btn {
+     display: inline-flex;
+     align-items: center;
+     padding: 0.75rem 1.5rem;
+     background: var(--link-btn-bg);
+     color: var(--link-hover-bg);
+     border-radius: 50px;
+     font-weight: 600;
+     font-size: 1rem;
+     text-decoration: none;
+     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+     transition: transform 0.2s, box-shadow 0.2s;
+     cursor: pointer;
+ }
+
+ .overlay-link-btn i {
+     margin-left: 0.5rem;
+     font-size: 0.9rem;
+ }
+
+ .overlay-link-btn:hover {
+     transform: scale(1.05);
+     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+ }
+
+ .portfolio-card h3 {
+     font-size: 1.25rem;
+     margin-bottom: 0.5rem;
+ }
+
+ .portfolio-card p {
+     font-size: 0.9rem;
+     margin-bottom: 1rem;
+ }
+
+ .tags {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 0.75rem;
+ }
+
+ .tags span {
+     background: var(--tag-bg);
+     color: var(--text-color-strong);
+     padding: 0.4rem 0.9rem;
+     border-radius: 8px;
+     font-size: 0.9rem;
+     font-weight: 500;
+     border: none;
+     margin: 0;
+ }
+
+ /* Hidden Project Card Styling for 'Show More' functionality */
+ .portfolio-hidden {
+     /* Initial state: hidden and ready for animation */
+     display: none;
+     opacity: 0;
+     /* Animation CSS for Show More/Less */
+     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+     transform: translateY(20px);
+ }
+
+ .portfolio-hidden.portfolio-visible {
+     /* Final state: visible and positioned */
+     display: block;
+     /* Override 'display: none' and maintain grid flow */
+     opacity: 1;
+     transform: translateY(0);
+ }
+
+ /* Show More/Less Button Styling (Reusing previous style) */
+ #show-more-projects {
+     /* Custom gradient style for a prominent button */
+     background: linear-gradient(135deg, var(--hero-h1-color), var(--hero-h2-color));
+     color: white;
+     border: none;
+     padding: 0.75rem 2rem;
+     font-size: 1rem;
+     font-weight: 700;
+     border-radius: 50px;
+     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+     cursor: pointer;
+     transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+ }
+
+ #show-more-projects:hover {
+     transform: translateY(-2px);
+     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+     /* Gradient direction reverse on hover */
+     background: linear-gradient(135deg, var(--hero-h2-color), var(--hero-h1-color));
+ }
+
+
+ /* ======== Experience & Education Styling ======== */
+ .experience-container,
+ .education-container {
+     display: grid;
+     grid-template-columns: 1fr;
+     gap: 2rem;
+ }
+
+ /* Individual Item Styling */
+ .experience-item,
+ .education-item {
+     margin-bottom: 0;
+     /* Override default margin */
+     display: flex;
+     flex-direction: column;
+ }
+
+ .experience-item h3,
+ .education-item h3 {
+     font-size: 1.3rem;
+     margin-bottom: 0.1rem;
+ }
+
+ .role-date {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 0.5rem;
+     font-size: 0.95rem;
+ }
+
+ .role-date .location {
+     font-style: italic;
+     color: var(--hero-h2-color);
+ }
+
+ body.dark-mode .role-date .location {
+     color: var(--text-color);
+ }
+
+ .experience-item p.duration,
+ .education-item p.duration {
+     font-size: 0.9rem;
+     font-weight: 500;
+     color: var(--text-color);
+ }
+
+ /* Styling for the description list */
+ .description-list {
+     margin-top: 1rem;
+     list-style: none;
+     /* Remove default bullets */
+     padding: 0;
+ }
+
+ .description-list li {
+     position: relative;
+     padding-left: 1.5rem;
+     margin-bottom: 0.5rem;
+     font-size: 1rem;
+ }
+
+ .description-list li::before {
+     content: '•';
+     /* Custom bullet point */
+     color: var(--skill-icon-color);
+     font-weight: bold;
+     display: inline-block;
+     width: 1em;
+     margin-left: -1em;
+ }
+
+
+ /* ======== Contact Form (No functional changes) ======== */
+ #contact form {
+     display: flex;
+     flex-direction: column;
+     max-width: 600px;
+     margin: 0 auto;
+ }
+
+ #contact input,
+ #contact textarea {
+     background: var(--card-bg);
+     border: 1px solid var(--border-color);
+     border-radius: 10px;
+     padding: 1rem;
+     margin-bottom: 1rem;
+     font-size: 1rem;
+     color: var(--text-color);
+     backdrop-filter: blur(5px);
+ }
+
+ #contact input::placeholder,
+ #contact textarea::placeholder {
+     color: var(--text-color);
+     opacity: 0.8;
+ }
+
+ .send-btn {
+     padding: 1rem;
+     font-size: 1.1rem;
+     font-weight: 600;
+     color: var(--text-color-strong);
+     background: var(--card-bg);
+     border: 1px solid var(--border-color);
+     border-radius: 10px;
+     cursor: pointer;
+     transition: background 0.3s;
+ }
+
+ .send-btn:hover {
+     background: rgba(255, 255, 255, 0.5);
+ }
+
+ body.dark-mode .send-btn:hover {
+     background: rgba(0, 0, 0, 0.4);
+ }
+
+ /* ======== Footer (No functional changes) ======== */
+ footer {
+     text-align: center;
+     padding: 3rem 2rem;
+     margin-top: 2rem;
+     border-top: 1px solid var(--border-color);
+     background: var(--card-bg);
+ }
+
+ footer h3 {
+     font-size: 1.5rem;
+     margin-bottom: 1rem;
+ }
+
+ .social-links a {
+     font-size: 1.5rem;
+     margin: 0 1rem;
+     color: var(--text-color);
+     transition: color 0.3s;
+     cursor: pointer;
+ }
+
+ .social-links a:hover {
+     color: var(--text-color-strong);
+ }
+
+ footer p {
+     margin-top: 1rem;
+     font-size: 0.9rem;
+ }
+
+
+ /* ======== RESPONSIVENESS (Mobile & Tablet) ======== */
+ @media (max-width: 768px) {
+     section {
+         margin: 2rem auto;
+         padding: 1rem;
+     }
+
+     /* --- Hamburger Menu Logic --- */
+     .nav-links {
+         position: fixed;
+         top: 60px;
+         right: -100%;
+         width: 60%;
+         height: calc(100vh - 60px);
+         background: var(--nav-bg);
+         backdrop-filter: blur(20px);
+         flex-direction: column;
+         align-items: center;
+         padding-top: 3rem;
+         transition: right 0.5s ease-in-out;
+         z-index: 999;
+         border-left: 1px solid var(--border-color);
+     }
+
+     .nav-links li {
+         margin: 1.0rem 0;
+         /* Adjusted margin */
+     }
+
+     .nav-links.active {
+         right: 0;
+     }
+
+     .hamburger {
+         display: block;
+         z-index: 1001;
+     }
+
+     .hamburger.active .line:nth-child(1) {
+         transform: rotate(45deg) translate(5px, 6px);
+     }
+
+     .hamburger.active .line:nth-child(2) {
+         opacity: 0;
+     }
+
+     .hamburger.active .line:nth-child(3) {
+         transform: rotate(-45deg) translate(5px, -6px);
+     }
+
+     /* --- Mobile Hero Section --- */
+     #hero {
+         flex-direction: column-reverse;
+         text-align: center;
+         min-height: auto;
+         margin-top: 3rem;
+     }
+
+     .hero-left {
+         padding-right: 0;
+     }
+
+     .hero-left p {
+         max-width: 100%;
+         padding: 0 1rem;
+         text-align: center;
+     }
+
+     .hero-left h1 {
+         font-size: 2.5rem;
+         text-align: center;
+     }
+
+     .hero-left h2 {
+         font-size: 1.5rem;
+         text-align: center;
+         min-width: 120px;
+     }
+
+     /* Shrink image size on mobile */
+     .hero-right .image-container {
+         width: 280px;
+         height: 320px;
+         margin-bottom: 2rem;
+         cursor: default;
+     }
+
+     /* Hide image blur and glow on mobile */
+     .hero-right .image-container:hover img {
+         filter: none;
+     }
+
+     #cursor-glow {
+         display: none;
+         /* Disable cursor glow on mobile */
+     }
+
+     .skills-grid,
+     .portfolio-grid,
+     .experience-container,
+     .education-container {
+         grid-template-columns: 1fr;
+     }
+
+     .card-overlay {
+         height: 140px;
+     }
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* Skills grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 19.2px; /* 1.2rem */
+}
+
+/* Skill card */
+.skillcard {
+  background: var(--card);
+  padding: 22.4px; /* 1.4rem */
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(16, 24, 40, 0.04);
+}
+
+/* Skill icon */
+.skillcard img {
+  width: 64px;
+  height: 64px;
+  display: block;
+  margin: 0 auto 12.8px auto; /* 0.8rem */
+}
+
+/* Skill name */
+.skname {
+  font-weight: 600;
+  color: var(--dark);
+}
+
+
+
+#contact .contact-footer {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 15px;
+}
