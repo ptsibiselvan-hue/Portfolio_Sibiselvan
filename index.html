@@ -309,10 +309,10 @@
     <section id="contact">
         <h2 class="animate-me" style="transition-delay: 0ms;">Get In Touch</h2>
         <div class="contact-card animate-me" data-delay="100" style="transition-delay: 100ms;">
-            <form action="#" method="POST">
+            <form id="contact-form">
                 <input type="text" name="name" placeholder="Your Name" required>
                 <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                <textarea name="message"  placeholder="Your Message" required></textarea>
                 <button type="submit" class="send-btn">Send Message</button>
             </form>
 
@@ -334,4 +334,7 @@
 
     <script src="script.js"></script>
 </body>
+
+ <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
 </html>

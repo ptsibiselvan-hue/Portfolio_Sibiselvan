@@ -231,3 +231,43 @@
             });
             
         });
+
+
+
+        //  ======================================//
+        //  ======== Responsive Form page ========//
+        //  ======================================//
+
+
+       
+
+            
+
+          
+
+                document.addEventListener("DOMContentLoaded", function () {
+
+            emailjs.init("ujN7Fbr2-gPP2uEY9");
+
+            const form = document.getElementById("contact-form");
+
+            form.addEventListener("submit", function (e) {
+            e.preventDefault();   // THIS stops refresh
+
+            emailjs.sendForm(
+                "service_a6cbv7f",
+                "template_d2qz9yo",
+                form
+            )
+            .then(function () {
+                alert("Message sent successfully!");
+                form.reset();
+            })
+            .catch(function (error) {
+                console.error(error);
+                alert("Failed to send message.");
+            });
+
+            });
+
+        });

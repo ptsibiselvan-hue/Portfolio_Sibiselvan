@@ -840,17 +840,40 @@
 
 
 
+/* ============================= */
+/* Mobile Responsive - Skills   */
+/* ============================= */
+@media (max-width: 768px) {
 
+  .grid.tech {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 skills per row */
+    gap: 20px;
+    justify-items: center;
+    align-items: center;
+  }
 
+  .skillcard {
+    text-align: center;
+    padding: 15px;
+  }
 
+  .skillcard img {
+    width: 60px;      /* Adjust icon size */
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 8px;
+  }
 
+  .skname {
+    font-size: 14px;
+  }
 
+  .skill-card {
+    padding: 20px;
+  }
 
-
-
-
-
-
+}
 
 
  /* Skills grid */
